@@ -510,9 +510,13 @@ def _pagina_inicia_tramite(
     if not lineas:
         return False
 
-    utiles = [l for l in lineas if not _RE_SOLO_NUMERO.match(l)]
     utiles = [
-        l for l in utiles if not _es_encabezado_corrido(l, frecuencia, umbral)
+        linea for linea in lineas if not _RE_SOLO_NUMERO.match(linea)
+    ]
+    utiles = [
+        linea
+        for linea in utiles
+        if not _es_encabezado_corrido(linea, frecuencia, umbral)
     ]
     if not utiles:
         return False
@@ -581,7 +585,9 @@ def _detectar_por_texto(
 
     frecuencia: Counter[str] = Counter()
     for lineas in lineas_por_pagina.values():
-        utiles = [l for l in lineas if not _RE_SOLO_NUMERO.match(l)]
+        utiles = [
+            linea for linea in lineas if not _RE_SOLO_NUMERO.match(linea)
+        ]
         if utiles:
             frecuencia[utiles[0]] += 1
     umbral = max(4, int(total_paginas * 0.15))
