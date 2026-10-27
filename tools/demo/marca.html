@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>separador-expedientes - marca</title>
+  <style>
+    :root {
+      --bg: #05070a;
+      --win: #0d1117;
+      --bar: #161b22;
+      --border: #30363d;
+      --text: #c9d1d9;
+      --muted: #8b949e;
+      --green: #7ee787;
+      --blue: #79c0ff;
+      --white: #e6edf3;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+    }
+
+    body[data-tipo="social"] {
+      width: 1280px;
+      height: 640px;
+      overflow: hidden;
+      background:
+        radial-gradient(900px 500px at 85% 10%, rgba(88, 166, 255, 0.10), transparent 60%),
+        radial-gradient(700px 400px at 5% 95%, rgba(126, 231, 135, 0.06), transparent 60%),
+        var(--bg);
+    }
+
+    body[data-tipo="logo"] {
+      width: 512px;
+      height: 512px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+    }
+
+    .social {
+      display: flex;
+      gap: 60px;
+      padding: 72px;
+      height: 100%;
+    }
+
+    body[data-tipo="logo"] .social { display: none; }
+
+    .copy {
+      width: 580px;
+      flex: 0 0 580px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 2.2px;
+      color: var(--green);
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      background: var(--green);
+      display: inline-block;
+    }
+
+    h1 {
+      margin: 26px 0 0;
+      font-size: 58px;
+      line-height: 1.04;
+      letter-spacing: -1.6px;
+      color: var(--white);
+    }
+
+    .sub {
+      margin: 26px 0 0;
+      font-size: 24px;
+      line-height: 1.4;
+      color: var(--muted);
+    }
+
+    .features {
+      margin: 34px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 12px;
+    }
+
+    .features li {
+      position: relative;
+      padding-left: 22px;
+      font-size: 18px;
+      line-height: 1.4;
+      color: var(--text);
+    }
+
+    .features li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 8px;
+      height: 8px;
+      background: #30363d;
+      border: 1px solid #484f58;
+    }
+
+    .foot {
+      margin-top: auto;
+      font-size: 16px;
+      color: #6e7681;
+      letter-spacing: 0.2px;
+    }
+
+    .card {
+      flex: 1;
+      align-self: center;
+      height: 496px;
+      background: var(--win);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.55);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-bar {
+      flex: 0 0 40px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 14px;
+      background: var(--bar);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #21262d;
+      border: 1px solid #3b434c;
+    }
+
+    .card-title {
+      flex: 1;
+      text-align: center;
+      font-family: "Cascadia Mono", Consolas, monospace;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.3px;
+    }
+
+    .card-tag {
+      font-family: "Cascadia Mono", Consolas, monospace;
+      font-size: 10px;
+      color: var(--green);
+      border: 1px solid rgba(126, 231, 135, 0.35);
+      padding: 2px 7px;
+      border-radius: 999px;
+    }
+
+    .card-body {
+      flex: 1;
+      padding: 20px 22px;
+      font-family: "Cascadia Mono", "Cascadia Code", Consolas, monospace;
+      font-size: 12.5px;
+      line-height: 25px;
+      color: var(--text);
+      overflow: hidden;
+    }
+
+    .card-body > div { white-space: pre; }
+
+    .ok { color: var(--green); }
+    .dir { color: var(--muted); }
+    .file { color: var(--text); }
+    .idx { color: var(--blue); }
+    .blank { height: 10px; }
+
+    .logo {
+      display: none;
+      width: 512px;
+      height: 512px;
+      line-height: 0;
+    }
+
+    .logo svg { display: block; }
+
+    body[data-tipo="logo"] .logo { display: block; }
+  </style>
+</head>
+<body data-tipo="social">
+  <div class="social">
+    <div class="copy">
+      <div class="eyebrow">PYTHON · CLI + API</div>
+      <h1>Separador de<br>expedientes</h1>
+      <p class="sub">Un PDF por trámite.<br>Índice CSV/JSON.</p>
+      <ul class="features">
+        <li>Bookmarks planos y anidados</li>
+        <li>Detección por texto o mapa manual</li>
+        <li>pypdf y PyMuPDF</li>
+        <li>Procesamiento local</li>
+      </ul>
+      <div class="foot">github.com/puzska/separador-expedientes</div>
+    </div>
+
+    <div class="card">
+      <div class="card-bar">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="card-title">Salida</span>
+        <span class="card-tag">8 trámites</span>
+      </div>
+      <div class="card-body" id="salida">
+        <div class="ok">Listo: 8 trámites, 11 páginas.</div>
+        <div class="blank"></div>
+        <div class="dir">TRAMITES SEPARADOS/</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="logo">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Separador de expedientes">
+      <rect width="512" height="512" rx="112" fill="#0d1117"/>
+      <rect x="0.5" y="0.5" width="511" height="511" rx="111.5" fill="none" stroke="#30363d"/>
+      <rect x="106" y="150" width="88" height="220" rx="12" fill="#161b22" stroke="#58a6ff" stroke-width="8"/>
+      <rect x="212" y="118" width="88" height="284" rx="12" fill="#161b22" stroke="#7ee787" stroke-width="8"/>
+      <rect x="318" y="150" width="88" height="220" rx="12" fill="#161b22" stroke="#d2a8ff" stroke-width="8"/>
+      <g stroke="#30363d" stroke-width="8" stroke-linecap="round">
+        <line x1="130" y1="196" x2="170" y2="196"/>
+        <line x1="130" y1="220" x2="170" y2="220"/>
+        <line x1="130" y1="244" x2="158" y2="244"/>
+        <line x1="236" y1="164" x2="276" y2="164"/>
+        <line x1="236" y1="188" x2="276" y2="188"/>
+        <line x1="236" y1="212" x2="264" y2="212"/>
+        <line x1="342" y1="196" x2="382" y2="196"/>
+        <line x1="342" y1="220" x2="382" y2="220"/>
+        <line x1="342" y1="244" x2="370" y2="244"/>
+      </g>
+    </svg>
+  </div>
+
+  <script src="datos.js"></script>
+  <script>
+    (function () {
+      "use strict";
+
+      const tipo = new URLSearchParams(location.search).get("tipo") || "social";
+      document.body.dataset.tipo = tipo;
+
+      const datos = window.DEMO_DATA;
+      const salida = document.getElementById("salida");
+      if (!datos || !datos.archivos || !salida) return;
+
+      const nombres = datos.archivos.salida;
+      nombres.forEach(function (nombre) {
+        const div = document.createElement("div");
+        div.className = nombre.indexOf("INDICE_") === 0 ? "file idx" : "file";
+        div.textContent = "  " + nombre;
+        salida.appendChild(div);
+      });
+    })();
+  </script>
+</body>
+</html>

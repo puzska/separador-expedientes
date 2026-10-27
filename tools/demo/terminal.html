@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>separador-expedientes - demo</title>
+  <style>
+    :root {
+      --bg: #05070a;
+      --win: #0d1117;
+      --bar: #161b22;
+      --border: #30363d;
+      --text: #c9d1d9;
+      --muted: #8b949e;
+      --green: #7ee787;
+      --blue: #79c0ff;
+      --white: #e6edf3;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      background: var(--bg);
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Cascadia Mono", "Cascadia Code", Consolas, "Courier New", monospace;
+    }
+
+    .window {
+      width: 1140px;
+      height: 600px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: var(--win);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.65);
+    }
+
+    .bar {
+      flex: 0 0 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      background: var(--bar);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dots {
+      display: flex;
+      gap: 7px;
+      width: 220px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #21262d;
+      border: 1px solid #3b434c;
+    }
+
+    .title {
+      flex: 1;
+      text-align: center;
+      font-size: 12px;
+      letter-spacing: 0.4px;
+      color: var(--muted);
+    }
+
+    .badge {
+      width: 220px;
+      text-align: right;
+      font-size: 11px;
+      letter-spacing: 0.3px;
+      color: #6e7681;
+    }
+
+    .body {
+      flex: 1;
+      overflow: hidden;
+      padding: 18px 26px;
+      font-size: 14px;
+      line-height: 19.5px;
+      letter-spacing: -0.15px;
+    }
+
+    .line {
+      white-space: pre;
+      color: var(--text);
+    }
+
+    .path { color: var(--green); }
+    .cmd { color: var(--white); }
+    .muted { color: var(--muted); }
+    .total { color: var(--green); }
+    .progress { color: var(--blue); }
+    .ok { color: var(--green); }
+
+    .cursor {
+      display: inline-block;
+      width: 8px;
+      height: 15px;
+      margin-left: 2px;
+      vertical-align: -2px;
+      background: var(--green);
+    }
+  </style>
+</head>
+<body>
+  <div class="window">
+    <div class="bar">
+      <div class="dots">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+      <div class="title">PowerShell</div>
+      <div class="badge">separador-expedientes</div>
+    </div>
+    <div class="body" id="term"></div>
+  </div>
+
+  <script src="datos.js"></script>
+  <script>
+    (function () {
+      "use strict";
+
+      const term = document.getElementById("term");
+      const data = window.DEMO_DATA;
+
+      if (!data) {
+        term.textContent = "Falta tools/demo/datos.js. Ejecutá python tools/demo/generar_datos.py.";
+        return;
+      }
+
+      // Tiempos en milisegundos. Todo el estado se calcula a partir de t,
+      // así Playwright puede capturar frames deterministas.
+      const T = {
+        type1: [300, 2200],
+        out1: 2400,
+        line1: 130,
+        clear: 4800,
+        type2: [5100, 6800],
+        out2: 7000,
+        line2: 170,
+        type3: [9000, 10300],
+        out3: 10500,
+        line3: 120,
+        end: 12500
+      };
+
+      const ESCAPES = { "&": "&amp;", "<": "&lt;", ">": "&gt;" };
+
+      function esc(texto) {
+        return String(texto).replace(/[&<>]/g, function (c) {
+          return ESCAPES[c];
+        });
+      }
+
+      function parcial(texto, t, inicio, fin) {
+        if (t <= inicio) return "";
+        if (t >= fin) return texto;
+        const avance = (t - inicio) / (fin - inicio);
+        const cantidad = Math.floor(avance * texto.length);
+        return texto.slice(0, Math.max(0, Math.min(texto.length, cantidad)));
+      }
+
+      function visibles(t, inicio, retardo, lineas) {
+        if (t < inicio) return [];
+        const cantidad = Math.floor((t - inicio) / retardo) + 1;
+        return lineas.slice(0, Math.max(0, Math.min(lineas.length, cantidad)));
+      }
+
+      function lineaPrompt(comando, cursor) {
+        return (
+          '<div class="line"><span class="path">' + esc(data.prompt) + "</span> " +
+          '<span class="cmd">' + esc(comando) + "</span>" +
+          (cursor ? '<span class="cursor"></span>' : "") +
+          "</div>"
+        );
+      }
+
+      function lineaTexto(texto) {
+        if (!texto) return '<div class="line">&nbsp;</div>';
+        let clase = "";
+        if (texto.indexOf("Total:") === 0) clase = " total";
+        else if (/^\[\s*\d+\/\d+\]/.test(texto)) clase = " progress";
+        else if (texto.indexOf("Listo:") === 0) clase = " ok";
+        else if (texto.indexOf("Índice:") === 0) clase = " muted";
+        return '<div class="line' + clase + '">' + esc(texto) + "</div>";
+      }
+
+      function escenaListar(t) {
+        const lineas = [];
+        const comando = parcial(data.listar.comando, t, T.type1[0], T.type1[1]);
+        lineas.push(lineaPrompt(comando, t < T.out1));
+
+        if (t >= T.out1) {
+          lineas.push(lineaTexto(""));
+          visibles(t, T.out1, T.line1, data.listar.salida).forEach(function (linea) {
+            lineas.push(lineaTexto(linea));
+          });
+        }
+
+        const finSalida = T.out1 + data.listar.salida.length * T.line1;
+        if (t >= finSalida) {
+          lineas.push(lineaTexto(""));
+          lineas.push(lineaPrompt("", true));
+        }
+        return lineas;
+      }
+
+      function escenaDividir(t) {
+        const lineas = [];
+        const comando = parcial(data.dividir.comando, t, T.type2[0], T.type2[1]);
+        lineas.push(lineaPrompt(comando, t < T.out2));
+
+        if (t >= T.out2) {
+          lineas.push(lineaTexto(""));
+          visibles(t, T.out2, T.line2, data.dividir.salida).forEach(function (linea) {
+            lineas.push(lineaTexto(linea));
+          });
+        }
+
+        if (t >= T.type3[0] - 300) {
+          lineas.push(lineaTexto(""));
+        }
+        if (t >= T.type3[0]) {
+          const comandoArchivos = parcial(
+            data.archivos.comando,
+            t,
+            T.type3[0],
+            T.type3[1]
+          );
+          lineas.push(lineaPrompt(comandoArchivos, t < T.out3));
+        }
+
+        if (t >= T.out3) {
+          visibles(t, T.out3, T.line3, data.archivos.salida).forEach(function (linea) {
+            lineas.push(lineaTexto(linea));
+          });
+        }
+
+        const finArchivos = T.out3 + data.archivos.salida.length * T.line3;
+        if (t >= finArchivos) {
+          lineas.push(lineaPrompt("", true));
+        }
+        return lineas;
+      }
+
+      window.renderFrame = function (t) {
+        const lineas = t >= T.clear ? escenaDividir(t) : escenaListar(t);
+        const recortadas = lineas.length > 28 ? lineas.slice(-28) : lineas;
+        term.innerHTML = recortadas.join("");
+      };
+
+      window.DEMO_DURATION = T.end;
+
+      const parametros = new URLSearchParams(location.search);
+      if (parametros.has("t")) {
+        window.renderFrame(Number(parametros.get("t")) || 0);
+      } else {
+        window.renderFrame(0);
+      }
+
+      if (parametros.has("play")) {
+        const inicio = performance.now();
+        function animar(ahora) {
+          const t = (ahora - inicio) % T.end;
+          window.renderFrame(t);
+          requestAnimationFrame(animar);
+        }
+        requestAnimationFrame(animar);
+      }
+    })();
+  </script>
+</body>
+</html>
