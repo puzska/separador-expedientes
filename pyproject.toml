@@ -39,7 +39,14 @@ dependencies = []
 [project.optional-dependencies]
 pypdf = ["pypdf>=5.0"]
 pymupdf = ["pymupdf>=1.24"]
-dev = ["pytest>=8", "pypdf>=5.0"]
+dev = ["pytest>=8", "pypdf>=5.0", "pillow>=10", "ruff>=0.6"]
+
+[project.urls]
+Homepage = "https://github.com/puzska/separador-expedientes"
+Source = "https://github.com/puzska/separador-expedientes"
+Issues = "https://github.com/puzska/separador-expedientes/issues"
+Changelog = "https://github.com/puzska/separador-expedientes/blob/main/CHANGELOG.md"
+Documentation = "https://github.com/puzska/separador-expedientes/tree/main/docs"
 
 [project.scripts]
 separador-expedientes = "separador_expediente:main"
@@ -53,3 +60,12 @@ version = { attr = "separador_expediente.__version__" }
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-ra"
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+extend-exclude = ["tools/demo/frames"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F"]
+
