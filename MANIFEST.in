@@ -1,9 +1,20 @@
 include LICENSE
 include README.md
+include README.en.md
+include CHANGELOG.md
+include CONTRIBUTING.md
+include SECURITY.md
+include CODE_OF_CONDUCT.md
+include ROADMAP.md
 include requirements.txt
 include plantilla_mapa.csv
 include ejemplo_integracion.py
 recursive-include ejemplos *.pdf *.json *.csv
 recursive-include scripts *.py
 recursive-include tests *.py
-recursive-include .github *.yml
+recursive-include assets *.gif *.png *.svg
+recursive-include docs *.md
+recursive-include tools/demo *.py *.mjs *.js *.html *.json *.md
+prune tools/demo/node_modules
+prune tools/demo/frames
+recursive-include .github *.yml *.md
