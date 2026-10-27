@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentación
+    url: https://github.com/puzska/separador-expedientes/tree/main/docs
+    about: Guía del mapa, privacidad, demo y publicación.
+  - name: Preguntas frecuentes
+    url: https://github.com/puzska/separador-expedientes/blob/main/docs/FAQ.md
+    about: Respuestas a las dudas más comunes.
+  - name: Reporte privado de seguridad
+    url: https://github.com/puzska/separador-expedientes/security/advisories/new
+    about: No publiques vulnerabilidades ni datos reales en un issue.

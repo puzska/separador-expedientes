@@ -1,0 +1,44 @@
+name: Mejora
+description: Proponer una funcionalidad o un cambio
+title: "[Mejora]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Las propuestas con un problema concreto y un caso de uso son más
+        fáciles de evaluar. No incluyas expedientes ni datos reales.
+
+  - type: textarea
+    id: problema
+    attributes:
+      label: Problema
+      description: ¿Qué necesidad o limitación querés resolver?
+      placeholder: Cuando el PDF tiene ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: propuesta
+    attributes:
+      label: Propuesta
+      description: ¿Cómo te gustaría que funcione?
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternativas
+    attributes:
+      label: Alternativas
+      description: ¿Probaste otra forma de resolverlo?
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: alcance
+    attributes:
+      label: Alcance
+      options:
+        - label: Puedo ayudar con un pull request.
+        - label: Puedo aportar un ejemplo sintético.
+        - label: Esto afecta a un flujo de trabajo institucional.
