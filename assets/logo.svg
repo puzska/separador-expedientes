@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Separador de expedientes">
+  <rect width="512" height="512" rx="112" fill="#0d1117"/>
+  <rect x="0.5" y="0.5" width="511" height="511" rx="111.5" fill="none" stroke="#30363d"/>
+  <rect x="106" y="150" width="88" height="220" rx="12" fill="#161b22" stroke="#58a6ff" stroke-width="8"/>
+  <rect x="212" y="118" width="88" height="284" rx="12" fill="#161b22" stroke="#7ee787" stroke-width="8"/>
+  <rect x="318" y="150" width="88" height="220" rx="12" fill="#161b22" stroke="#d2a8ff" stroke-width="8"/>
+  <g stroke="#30363d" stroke-width="8" stroke-linecap="round">
+    <line x1="130" y1="196" x2="170" y2="196"/>
+    <line x1="130" y1="220" x2="170" y2="220"/>
+    <line x1="130" y1="244" x2="158" y2="244"/>
+    <line x1="236" y1="164" x2="276" y2="164"/>
+    <line x1="236" y1="188" x2="276" y2="188"/>
+    <line x1="236" y1="212" x2="264" y2="212"/>
+    <line x1="342" y1="196" x2="382" y2="196"/>
+    <line x1="342" y1="220" x2="382" y2="220"/>
+    <line x1="342" y1="244" x2="370" y2="244"/>
+  </g>
+</svg>
