@@ -1,0 +1,46 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Entornos virtuales
+.venv/
+venv/
+env/
+
+# Tests y cobertura
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+
+# Empaquetado
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Salidas del separador
+salida*/
+TRAMITES SEPARADOS/
+INDICE_TRAMITES.*
+*_TRAMITES/
+mapa_borrador.*
+mapa_*.json
+mapa_*.csv
+!ejemplos/mapa_*.json
+!ejemplos/mapa_*.csv
+
+# PDFs: nunca subir expedientes reales.
+# Solo se permiten los ejemplos sintéticos del repositorio.
+*.pdf
+!ejemplos/*.pdf
+!tests/**/*.pdf
+
+# Editores y sistema
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*.log

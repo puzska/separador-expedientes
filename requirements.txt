@@ -1,0 +1,6 @@
+# Backend recomendado
+pypdf>=5.0
+
+# Alternativa opcional: si ya usás PyMuPDF, podés instalarlo y el script
+# lo detecta automáticamente. No es necesario si pypdf está instalado.
+# pymupdf>=1.24

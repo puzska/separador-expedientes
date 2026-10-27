@@ -1,0 +1,55 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "separador-expedientes"
+dynamic = ["version"]
+description = "Separa un PDF de expediente digital en un PDF por trámite, con índice CSV/JSON."
+readme = "README.md"
+requires-python = ">=3.9"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Franco Puszkarsky" }]
+keywords = [
+    "pdf",
+    "expedientes",
+    "judicial",
+    "legaltech",
+    "pypdf",
+    "pymupdf",
+    "cli",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: Legal Industry",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Office/Business",
+    "Topic :: Utilities",
+]
+dependencies = []
+
+[project.optional-dependencies]
+pypdf = ["pypdf>=5.0"]
+pymupdf = ["pymupdf>=1.24"]
+dev = ["pytest>=8", "pypdf>=5.0"]
+
+[project.scripts]
+separador-expedientes = "separador_expediente:main"
+
+[tool.setuptools]
+py-modules = ["separador_expediente"]
+
+[tool.setuptools.dynamic]
+version = { attr = "separador_expediente.__version__" }
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"

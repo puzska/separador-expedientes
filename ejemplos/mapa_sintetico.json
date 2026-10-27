@@ -1,0 +1,32 @@
+[
+  {
+    "archivo": "01_Demanda.pdf",
+    "nombre": "Demanda",
+    "categoria": "Actuaciones Procesales - Escrito de parte",
+    "paginas": "1-3"
+  },
+  {
+    "archivo": "02_Providencia.pdf",
+    "nombre": "Providencia",
+    "categoria": "Actuaciones Procesales - Resolucion judicial",
+    "paginas": "4-4"
+  },
+  {
+    "archivo": "03_Contestacion.pdf",
+    "nombre": "Contestacion",
+    "categoria": "Actuaciones Procesales - Contestacion",
+    "paginas": "5-7"
+  },
+  {
+    "archivo": "04_Sentencia.pdf",
+    "nombre": "Sentencia",
+    "categoria": "Actuaciones Procesales - Resolucion judicial",
+    "paginas": "8-9"
+  },
+  {
+    "archivo": "05_Oficios.pdf",
+    "nombre": "Oficios",
+    "categoria": "Actuaciones Procesales - Oficio",
+    "paginas": "10-11"
+  }
+]
