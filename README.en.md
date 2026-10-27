@@ -3,6 +3,8 @@
 [Español](https://github.com/puzska/separador-expedientes/blob/main/README.md) | **English**
 
 [![CI](https://github.com/puzska/separador-expedientes/actions/workflows/ci.yml/badge.svg)](https://github.com/puzska/separador-expedientes/actions/workflows/ci.yml)
+[![PyPI](https://img.shields.io/pypi/v/separador-expedientes)](https://pypi.org/project/separador-expedientes/)
+[![Release](https://img.shields.io/github/v/release/puzska/separador-expedientes)](https://github.com/puzska/separador-expedientes/releases)
 [![Python](https://img.shields.io/badge/python-3.9%20%7C%203.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](https://github.com/puzska/separador-expedientes/blob/main/LICENSE)
 
