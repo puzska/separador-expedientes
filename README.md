@@ -1,7 +1,21 @@
 # Separador de expedientes en trámites
 
+**Español** | [English](https://github.com/puzska/separador-expedientes/blob/main/README.en.md)
+
+[![CI](https://github.com/puzska/separador-expedientes/actions/workflows/ci.yml/badge.svg)](https://github.com/puzska/separador-expedientes/actions/workflows/ci.yml)
+[![Python](https://img.shields.io/badge/python-3.9%20%7C%203.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green)](https://github.com/puzska/separador-expedientes/blob/main/LICENSE)
+
 Herramienta para tomar un PDF de expediente digital y separarlo en **un PDF por
 trámite**, generando además un índice en CSV y JSON.
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/puzska/separador-expedientes/main/assets/demo.gif" alt="Demo: separador-expedientes lista los trámites y genera un PDF por trámite" width="900">
+</p>
+
+<p align="center">
+  <sub>Demo generado con la salida real del CLI sobre un expediente ficticio. <a href="https://github.com/puzska/separador-expedientes/blob/main/docs/DEMO.md">Cómo se genera</a>.</sub>
+</p>
 
 Funciona con expedientes que tengan bookmarks o texto extraíble, y con
 escaneos si se le pasa un mapa manual. No está atada a un juzgado, a un sistema
@@ -9,6 +23,7 @@ de gestión ni a un formato de expediente determinado.
 
 Se puede usar como **CLI** o importar como **módulo** desde otro programa (un
 asistente legal, un gestor de causas, una app de carga de expedientes, etc.).
+
 
 ## Características
 
@@ -35,17 +50,25 @@ Si están las dos instaladas, usa `pypdf`. También se puede forzar con
 
 ## Instalación
 
-Como paquete instalable (recomendado):
+Desde PyPI (recomendado):
 
 ```bat
-python -m pip install -e ".[pypdf]"
+python -m pip install "separador-expedientes[pypdf]"
 separador-expedientes --version
 ```
 
 Si preferís PyMuPDF:
 
 ```bat
-python -m pip install -e ".[pymupdf]"
+python -m pip install "separador-expedientes[pymupdf]"
+```
+
+Para desarrollo, desde el repositorio:
+
+```bat
+git clone https://github.com/puzska/separador-expedientes.git
+cd separador-expedientes
+python -m pip install -e ".[dev]"
 ```
 
 También se puede usar sin instalar, copiando `separador_expediente.py` al
@@ -162,6 +185,15 @@ separador-expedientes "ejemplos/expediente_sintetico.pdf" -o salida --mapa "ejem
 
 El mapa tiene prioridad sobre la detección automática. Sirve cuando se quiere
 respetar una agrupación procesal hecha a mano.
+
+## Documentación
+
+- [Guía del mapa manual](https://github.com/puzska/separador-expedientes/blob/main/docs/MAPA.md)
+- [Preguntas frecuentes](https://github.com/puzska/separador-expedientes/blob/main/docs/FAQ.md)
+- [Privacidad y datos](https://github.com/puzska/separador-expedientes/blob/main/docs/PRIVACIDAD.md)
+- [Demo y assets](https://github.com/puzska/separador-expedientes/blob/main/docs/DEMO.md)
+- [Publicación y release](https://github.com/puzska/separador-expedientes/blob/main/docs/PUBLICAR.md)
+- [Hoja de ruta](https://github.com/puzska/separador-expedientes/blob/main/ROADMAP.md)
 
 ## Opciones principales
 
@@ -327,6 +359,19 @@ borrador, revisarlo y volver a ejecutar con `--mapa`.
 ├── pyproject.toml              # instalación, entry point y pytest
 ├── requirements.txt            # dependencia mínima (pypdf)
 ├── plantilla_mapa.csv          # plantilla de mapa manual
+├── README.md                   # documentación en español
+├── README.en.md                # documentación en inglés
+├── CHANGELOG.md
+├── CONTRIBUTING.md
+├── SECURITY.md
+├── CODE_OF_CONDUCT.md
+├── ROADMAP.md
+├── assets/                     # demo, social preview y logo
+│   ├── demo.gif
+│   ├── demo.png
+│   ├── social-preview.png
+│   ├── logo.svg
+│   └── logo.png
 ├── ejemplos/                   # PDFs y mapas 100 % ficticios
 │   ├── expediente_sintetico.pdf
 │   ├── expediente_sin_bookmarks.pdf
@@ -334,11 +379,17 @@ borrador, revisarlo y volver a ejecutar con `--mapa`.
 │   ├── expediente_inicial.pdf
 │   ├── mapa_sintetico.json
 │   └── mapa_sintetico.csv
+├── docs/                       # guías, FAQ, privacidad y publicación
 ├── scripts/
 │   ├── pdf_sintetico.py        # generador de PDFs sin dependencias
 │   └── generar_ejemplo.py      # regenera los archivos de ejemplos/
+├── tools/demo/                 # terminal HTML, Playwright y GIF
 ├── tests/                      # suite de pytest
-└── .github/workflows/ci.yml    # CI en Linux y Windows
+└── .github/
+    ├── workflows/ci.yml        # CI en Linux y Windows
+    ├── workflows/release.yml   # PyPI y artefactos del release
+    ├── ISSUE_TEMPLATE/
+    └── dependabot.yml
 ```
 
 Los PDFs de ejemplo se pueden regenerar con:
@@ -352,11 +403,16 @@ python scripts/generar_ejemplo.py
 ```bat
 python -m pip install -e ".[dev]"
 python -m pytest
+python -m ruff check .
 ```
 
 La suite cubre parseo de fechas y títulos, categorización, bookmarks planos y
 anidados, agrupaciones, detección por texto, mapas JSON/CSV, división,
-índices, validaciones, verificación de salida, CLI y backends.
+índices, validaciones, verificación de salida, CLI y backends. También se
+verifican el tamaño y las dimensiones de los assets del demo.
+
+La integración continua corre los tests en Linux y Windows con Python 3.9,
+3.12 y 3.13, y construye el sdist y el wheel.
 
 ## Datos y privacidad
 
@@ -370,6 +426,8 @@ anidados, agrupaciones, detección por texto, mapas JSON/CSV, división,
 - Si hacés un fork o agregás casos de prueba, revisá `git status` antes de
   commitear para no publicar documentos de clientes.
 
+La política completa está en [docs/PRIVACIDAD.md](https://github.com/puzska/separador-expedientes/blob/main/docs/PRIVACIDAD.md).
+
 ## Límites
 
 - Los PDFs escaneados sin texto necesitan OCR o un mapa manual.
@@ -379,6 +437,17 @@ anidados, agrupaciones, detección por texto, mapas JSON/CSV, división,
   criterio de un juzgado, conviene generar un mapa borrador, revisarlo y usar
   `--mapa`.
 
+Ver también las [preguntas frecuentes](https://github.com/puzska/separador-expedientes/blob/main/docs/FAQ.md).
+
+## Contribuir
+
+Las contribuciones son bienvenidas. Leé [CONTRIBUTING.md](https://github.com/puzska/separador-expedientes/blob/main/CONTRIBUTING.md) y el
+[Código de conducta](https://github.com/puzska/separador-expedientes/blob/main/CODE_OF_CONDUCT.md).
+
+- No incluyas expedientes ni datos reales.
+- Los cambios de comportamiento necesitan tests.
+- Para vulnerabilidades, seguí [SECURITY.md](https://github.com/puzska/separador-expedientes/blob/main/SECURITY.md).
+
 ## Licencia
 
-MIT. Ver [LICENSE](LICENSE).
+MIT. Ver [LICENSE](https://github.com/puzska/separador-expedientes/blob/main/LICENSE).
